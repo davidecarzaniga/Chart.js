@@ -36,7 +36,11 @@
 	window.onload = function(){
 		var ctx = document.getElementById("canvas").getContext("2d");
 		window.myBar = new Chart(ctx).Bar(barChartData, {
-			responsive : true
+			responsive : true,
+      scaleOverride : true,
+      scaleSteps : 20,
+      scaleStepWidth : 10,
+      scaleStartValue : 0
 		});
 	}
 

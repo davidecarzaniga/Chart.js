@@ -1985,7 +1985,6 @@
 		name: "Bar",
 		defaults : defaultConfig,
 		initialize:  function(data){
-
 			//Expose options as a scope variable here so we can access it in the ScaleClass
 			var options = this.options;
 
@@ -2227,6 +2226,54 @@
 							y : this.scale.calculateY(bar.value),
 							width : this.scale.calculateBarWidth(this.datasets.length)
 						}, easingDecimal).draw();
+					}
+				},this);
+
+				helpers.each(dataset.bars,function(bar,index){
+					if (bar.hasValue()){
+						/* test barre sovrapposte */
+						console.log("scale", this.scale);
+						console.log("bar", bar);
+						bar.transition({
+							x : this.scale.calculateBarX(this.datasets.length, datasetIndex, index),
+							y : this.scale.calculateY(bar.value) - 100,
+							width : this.scale.calculateBarWidth(this.datasets.length)
+						}, easingDecimal).draw();
+					}
+				},this);
+
+				helpers.each(dataset.bars,function(bar,index){
+					if (bar.hasValue()){
+						/* test tooltip rotondo */
+						/*
+						var self = this;
+            new Chart.Tooltip({
+                x: Math.round(bar.x),
+                y: Math.round(bar.y - 50),
+                xPadding: this.options.tooltipXPadding,
+                yPadding: this.options.tooltipYPadding,
+                fillColor: this.options.tooltipFillColor,
+                textColor: this.options.tooltipFontColor,
+                fontFamily: this.options.tooltipFontFamily,
+                fontStyle: this.options.tooltipFontStyle,
+                fontSize: this.options.tooltipFontSize,
+                caretHeight: this.options.tooltipCaretSize,
+                cornerRadius: this.options.tooltipCornerRadius,
+                text: Chart.helpers.template(this.options.tooltipTemplate, Element),
+                chart: this.chart
+            }).draw();
+						*/
+			      var centerX = bar.x;
+			      var centerY = bar.y;
+			      var radius = bar.width;
+
+			      ctx.beginPath();
+			      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+			      ctx.fillStyle = 'green';
+			      ctx.fill();
+			      ctx.lineWidth = 5;
+			      ctx.strokeStyle = '#003300';
+			      ctx.stroke();
 					}
 				},this);
 
